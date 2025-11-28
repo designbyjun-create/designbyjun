@@ -353,7 +353,7 @@ img {
   width: fit-content;
   font-weight: 700;
   padding: 40px 0 0;
-  margin: 0 0 80px 0;
+  margin: 0 0 60px 0;
   position: relative;
   left: 50%;
   -webkit-transform: rotate(-5deg);
@@ -410,7 +410,7 @@ img {
       -ms-flex-pack: center;
           justify-content: center;
   gap: 16px;
-  margin: 0 4px 16px;
+  margin: 0 4px 40px;
 }
 .section-banner .icon-bar .icon-item {
   display: -webkit-box;
@@ -433,6 +433,11 @@ img {
           box-shadow: 4px 4px 8px #49378f;
   width: 140px;
 }
+@media screen and (max-width: 767px) {
+  .section-banner .icon-bar .icon-item .pic-icon {
+    width: 70px;
+  }
+}
 .section-banner .icon-bar .icon-item .icon-text {
   font-size: clamp(12px, 9px + 17 * (100dvw - 375px) / 1545, 30px);
   margin-top: 0.5em;
@@ -447,7 +452,7 @@ img {
 }
 @media screen and (max-width: 767px) {
   .section-banner .icon-bar .icon-item .icon-text {
-    font-size: 11px;
+    font-size: 14px;
   }
 }
 .section-banner .icon-bar .icon-item a {
