@@ -171,7 +171,20 @@ img {
         .strong {
             color: #034891;
         }
+        .gray{
+            color: #313131;
+        }
+        .comma{
+            &::after{
+                content: "，";
+            }
+        }
         @include maxWidth-sm() {
+            .comma{
+                &::after{
+                content: "";
+            }   
+            }
             span{
                 display: block;
             }
@@ -408,6 +421,12 @@ img {
             text-shadow: 0 0 8px #49378f, 0 0 8px #49378f, 0 0 8px #49378f,
                 0 0 8px #49378f;
             font-weight: 600;
+            @include maxWidth-md() {
+                span{
+                    display: block;
+                    line-height: 1.5;
+                }
+            }
         }
     }
 
@@ -703,6 +722,9 @@ img {
     em{
         font-style: normal;
         font-size: 14px;
+        @include maxWidth-sm() {
+            font-size: 10px;
+        }
     }
     .strong-1 {
         color: #0c4696;
