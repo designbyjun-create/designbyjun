@@ -344,7 +344,7 @@ img {
 }
 .section-banner .pic-date {
   position: absolute;
-  top: 24px;
+  top: 0px;
   left: calc(50% - 129px - 40px);
 }
 .section-banner .text-main {
@@ -358,20 +358,22 @@ img {
   left: 50%;
   -webkit-transform: rotate(-5deg);
           transform: rotate(-5deg);
+  font-style: italic;
 }
 .section-banner .text-main .title-main {
-  font-size: clamp(24px, 24px + 12 * (100dvw - 375px) / 1545, 36px);
+  font-size: clamp(28px, 28px + 12 * (100dvw - 375px) / 1545, 36px);
   color: #0d3876;
-  text-shadow: 0 0 4px #fff, 0 0 4px #fff, 0 0 4px #fff, 0 0 4px #fff;
+  text-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff;
 }
 .section-banner .text-main .title-desc {
-  font-size: clamp(24px, 24px + 12 * (100dvw - 375px) / 1545, 36px);
+  font-size: clamp(28px, 28px + 12 * (100dvw - 375px) / 1545, 36px);
+  font-style: italic;
   color: #fff;
   margin: 8px 0 0 48px;
-  text-shadow: 0 0 4px #0cb7e2, 0 0 4px #0cb7e2, 0 0 4px #0cb7e2, 0 0 4px #0cb7e2;
+  text-shadow: 0 0 10px #0cb7e2, 0 0 10px #0cb7e2, 0 0 10px #0cb7e2, 0 0 10px #0cb7e2, 0 0 10px #0cb7e2;
 }
 .section-banner .text-main .title-fundcode {
-  font-size: clamp(100px, 100px + 40 * (100dvw - 375px) / 1545, 120px);
+  font-size: clamp(150px, 150px + 40 * (100dvw - 375px) / 1545, 120px);
   font-style: italic;
   letter-spacing: -4px;
   font-weight: 900;
@@ -387,8 +389,18 @@ img {
 }
 .section-banner .text-main .title-fundname {
   font-size: clamp(14px, 14px + 10 * (100dvw - 375px) / 1545, 24px);
+  font-style: italic;
   color: #fff;
   text-shadow: 0 0 4px #49378f, 0 0 4px #49378f, 0 0 4px #49378f, 0 0 4px #49378f;
+}
+@media screen and (max-width: 767px) {
+  .section-banner .text-main .title-fundname {
+    font-size: 0.8em;
+    margin-top: 1em;
+  }
+}
+.section-banner .text-main .title-fundname span {
+  color: #ffc6c6;
 }
 .section-banner .icon-bar {
   display: -webkit-box;
@@ -412,7 +424,7 @@ img {
       -ms-flex-align: center;
           align-items: center;
   gap: 8px;
-  width: 200px;
+  width: 180px;
   text-decoration: none;
 }
 .section-banner .icon-bar .icon-item .pic-icon {
@@ -430,6 +442,11 @@ img {
 }
 .section-banner .icon-bar .icon-item .icon-text .small {
   font-size: 0.7em;
+}
+@media screen and (max-width: 767px) {
+  .section-banner .icon-bar .icon-item .icon-text {
+    font-size: 0.5em;
+  }
 }
 .section-banner .icon-bar .icon-item a {
   text-decoration: none;
@@ -480,7 +497,7 @@ a + .section-banner .icon-bar .icon-item:a:hover {
 }
 @media screen and (max-width: 767px) {
   .section-banner .pic-date {
-    top: 4px;
+    top: 0px;
     left: unset;
     right: 4px;
     width: 64px;
@@ -488,7 +505,7 @@ a + .section-banner .icon-bar .icon-item:a:hover {
   .section-banner .pic-people {
     left: unset;
     top: 0px;
-    right: 200px;
+    right: 160px;
     width: 400px;
   }
   .section-banner .text-main {
