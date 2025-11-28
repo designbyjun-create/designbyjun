@@ -345,7 +345,7 @@ img {
 .section-banner .pic-date {
   position: absolute;
   top: 0px;
-  left: calc(50% - 129px - 40px);
+  left: calc(50% + 450px - 40px);
 }
 .section-banner .text-main {
   width: -webkit-fit-content;
@@ -424,17 +424,19 @@ img {
       -ms-flex-align: center;
           align-items: center;
   gap: 8px;
-  width: 180px;
+  width: 160px;
   text-decoration: none;
 }
 .section-banner .icon-bar .icon-item .pic-icon {
   border-radius: 50%;
   -webkit-box-shadow: 4px 4px 8px #49378f;
           box-shadow: 4px 4px 8px #49378f;
+  width: 140px;
 }
 .section-banner .icon-bar .icon-item .icon-text {
-  font-size: clamp(13px, 13px + 17 * (100dvw - 375px) / 1545, 30px);
-  font-weight: 900;
+  font-size: clamp(12px, 9px + 17 * (100dvw - 375px) / 1545, 30px);
+  margin-top: 0.5em;
+  font-weight: 700;
   line-height: 1.5;
   text-align: center;
   color: #fff;
@@ -445,7 +447,7 @@ img {
 }
 @media screen and (max-width: 767px) {
   .section-banner .icon-bar .icon-item .icon-text {
-    font-size: 0.5em;
+    font-size: 11px;
   }
 }
 .section-banner .icon-bar .icon-item a {
@@ -478,7 +480,7 @@ a + .section-banner .icon-bar .icon-item:a:hover {
 }
 @media screen and (max-width: 1279px) {
   .section-banner .pic-date {
-    left: calc(50% - 129px - 80px);
+    left: calc(50% + 420px - 80px);
   }
   .section-banner .text-main {
     left: 45%;
@@ -489,7 +491,7 @@ a + .section-banner .icon-bar .icon-item:a:hover {
 }
 @media screen and (max-width: 1023px) {
   .section-banner .pic-date {
-    left: calc(50% - 129px - 96px);
+    left: calc(50% + 420px - 96px);
   }
   .section-banner .text-main {
     left: 40%;
@@ -536,7 +538,7 @@ a + .section-banner .icon-bar .icon-item:a:hover {
     text-decoration: none;
   }
   .section-banner .icon-bar .icon-item .icon-text .small {
-    font-size: 12px;
+    font-size: 10px;
   }
 }
 
