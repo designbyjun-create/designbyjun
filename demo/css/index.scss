@@ -13,6 +13,7 @@
 
 html {
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 body {
     font-family: "Noto Sans TC", "Microsoft JhengHei", Arial, Helvetica,
@@ -40,6 +41,7 @@ body {
     max-width: 100%;
     margin: auto;
     padding: 0 16px;
+    text-align: justify;
 }
 
 img {
@@ -73,6 +75,7 @@ img {
     text-align: center;
     margin: auto;
     max-width: 100%;
+    font-style: italic;
     .pic-title {
         position: absolute;
         z-index: -1;
@@ -152,6 +155,9 @@ img {
         .strong {
             color: #034891;
         }
+        @include maxWidth-md() {
+            font-size: 30px;
+        }
     }
     .title-2 {
         margin-top: 40px;
@@ -161,8 +167,14 @@ img {
         font-weight: 700;
         text-align: center;
         margin-top: 40px;
+        line-height:1.5;
         .strong {
             color: #034891;
+        }
+        @include maxWidth-sm() {
+            span{
+                display: block;
+            }
         }
     }
     .pic-chart {
@@ -303,16 +315,25 @@ img {
         }
         .title-fundcode {
             font-size: clamp(
-                80px,
-                calc(80px + (120 - 80) * ((100dvw - 375px) / (1920 - 375))),
+                100px,
+                calc(100px + (120 - 80) * ((100dvw - 375px) / (1920 - 375))),
                 120px
             );
+            font-style: italic;
+            letter-spacing:-4px;
             font-weight: 900;
             line-height: 1;
             margin: 0 0 16px;
             color: #ed680b;
             text-shadow: 0 0 24px #fff, 0 0 24px #fff, 0 0 24px #fff,
                 0 0 24px #fff;
+                @include maxWidth-md() {
+                    font-size: clamp(
+                        90px,
+                        calc(90px + (120 - 80) * ((100dvw - 375px) / (1920 - 375))),
+                        120px
+                    );
+                }
         }
         .title-fundname {
             font-size: clamp(
@@ -337,6 +358,7 @@ img {
             align-items: center;
             gap: 8px;
             width: 200px;
+            text-decoration: none;
             .pic-icon {
                 border-radius: 50%;
                 box-shadow: 4px 4px 8px #49378f;
@@ -354,8 +376,14 @@ img {
                 text-shadow: 0 0 8px #49378f, 0 0 8px #49378f, 0 0 8px #49378f,
                     0 0 8px #49378f;
                 .small {
-                    font-size: 0.8em;
+                    font-size: 0.7em;
                 }
+            }
+            a{
+                text-decoration: none;
+            }
+            a+&:a:hover{
+                text-decoration: none;
             }
         }
     }
@@ -372,12 +400,14 @@ img {
             color: #fff;
             text-shadow: 0 0 8px #49378f, 0 0 8px #49378f, 0 0 8px #49378f,
                 0 0 8px #49378f;
+            font-weight: 600;
         }
         .desc-2 {
             color: #f8bc01;
             margin: 8px 0 0;
             text-shadow: 0 0 8px #49378f, 0 0 8px #49378f, 0 0 8px #49378f,
                 0 0 8px #49378f;
+            font-weight: 600;
         }
     }
 
@@ -432,6 +462,7 @@ img {
         .icon-bar {
             gap: 4px;
             .icon-item {
+                text-decoration: none;
                 .icon-text {
                     .small {
                         font-size: 12px;
@@ -457,6 +488,7 @@ img {
             transform: translateY(80px);
             text-shadow: 0 0 8px #ca4200, 0 0 8px #ca4200, 0 0 8px #ca4200,
                 0 0 8px #ca4200;
+                    
         }
     }
     .base-content {
@@ -668,6 +700,10 @@ img {
 
 .footer {
     line-height: 1.3;
+    em{
+        font-style: normal;
+        font-size: 14px;
+    }
     .strong-1 {
         color: #0c4696;
     }
