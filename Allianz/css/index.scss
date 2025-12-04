@@ -802,3 +802,129 @@ img {
         }
     }
 }
+
+.lightBox{
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out; // 新增淡出過渡效果
+  
+  &.show{
+    display: block;
+    opacity: 1;
+  }
+  
+  &.hiding {
+    opacity: 0; // 新增：用於淡出狀態
+  }
+  
+  &-bg{
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); // 從 0.5 改為 0.7，更深
+    backdrop-filter: blur(8px); // 新增：背景模糊效果
+    -webkit-backdrop-filter: blur(8px); // Safari 支援
+  }
+  
+  &-container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    box-sizing: border-box;
+    width: 890px;
+    box-sizing: border-box;
+    animation: lightboxContainer 0.3s ease-in-out;
+    
+    @keyframes lightboxContainer {
+      0% { 
+        opacity: 0;
+        transform: translateX(-50%) translateY(-45%); // 新增：從上方滑入
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-50%);
+      }
+    }
+    
+    @include maxWidth-md{
+      width: 90%;
+    }
+    
+    &-infoArea{
+      background: #f1f9ff;
+      border-radius: 2px;
+      font-size: 1.2em;
+      padding: 45px;
+      border-radius: 20px;
+      max-height: 85vh;
+      box-sizing: border-box;
+      box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.15);
+      
+      @include maxWidth-md{
+        font-size: 1em;
+        padding: 15px;
+      }
+      
+      h2{
+        color: #013d8a;
+        font-weight: bold;
+        padding-top: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+        
+        &.tit-type2{
+          font-size: 24px;
+          margin: 0px auto;
+          padding-top: 34px;
+          padding-bottom: 10px;
+          padding-top: 0px;
+          padding-left: 0px;
+          padding-right: 0px;
+          text-align: center;
+          
+          @include maxWidth-md{
+            font-size: 1.5em;
+          }
+        }
+      }
+      
+      .textArea{
+        margin: 15px 0px;
+        max-height: 400px;
+        overflow: auto;
+      }
+      
+      .btn-area{
+        
+        .btn, .estimate-viewPastDataBtn{
+          text-align: center;
+          box-sizing: border-box;
+          
+          a{
+            border-radius: 2px;
+            background: #fe6847;
+            border-radius: 15px;
+            color: #fff;
+            transition: 0.3s ease all;
+            font-size: 18px;
+            display: inline-block;
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+                box-shadow: 0 5px 10px #0003;
+            &:hover {
+              background: #ff7a5f;
+            }
+          }
+        }
+      }
+    }
+  }
+}
