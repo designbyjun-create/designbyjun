@@ -919,7 +919,7 @@ img {
         box-shadow: 8px 8px 32px #9dcfe6;
         text-align: center;
         width: 100%;
-        pointer-events: none;
+        // pointer-events: none;
         @include maxWidth-md() {
             font-size: 1em;
             line-height: 1.5;
@@ -971,24 +971,33 @@ img {
                 font-size: .8em;
             }
             li{
-                // border: 1px solid #e4e4e4;
-                box-sizing:border-box;
-                text-align: center;
-                letter-spacing:-1px;
-                padding: 0.2em;
-                /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#f7f7f7+0,ffffff+40 */
-                background: linear-gradient(to bottom,  #f7f7f7 0%,#ffffff 40%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-
+                a{
+                    // border: 1px solid #e4e4e4;
+                    box-sizing:border-box;
+                    text-align: center;
+                    letter-spacing:-1px;
+                    padding: 0.2em;
+                    display: block;
+                    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#f7f7f7+0,ffffff+40 */
+                    background: linear-gradient(to bottom,  #f7f7f7 0%,#ffffff 40%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                    color: #075a7d;
+                    text-decoration: none;
+                    &:hover{
+                        text-decoration: underline;
+                    }
+                }
                 &:nth-child(2n+1){
-                    background: #e2f0f7;
+                    a{
+                        background: #e2f0f7;
+                    }
                 }
                 @include maxWidth-md() {
-                 &:nth-child(2n+1){
-                    background: linear-gradient(to bottom,  #f7f7f7 0%,#ffffff 40%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-                  }
-                  &:nth-child(4n-1),&:nth-child(4n) {
-                    background: #e2f0f7;
-                  }
+                    &:nth-child(2n+1){
+                        background: linear-gradient(to bottom,  #f7f7f7 0%,#ffffff 40%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                    }
+                    &:nth-child(4n-1),&:nth-child(4n) {
+                        background: #e2f0f7;
+                    }
                 }
             }
         }
