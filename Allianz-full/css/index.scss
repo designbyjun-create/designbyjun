@@ -810,7 +810,56 @@ img {
 }
 
 .section-5 {
-    padding: 40px 0;
+    background-color: #278eb9;
+    padding: 0;
+    &::before{
+        content: "";
+        display: block;
+        width: 100%;
+        padding-top: 10em; /* 依圖片比例調整 */
+        background: url("../images/02_bg.png")center -15em no-repeat;
+        @include maxWidth-sm() {
+            background: url("../images/02_bg.png")0 -2em / cover no-repeat;
+            padding-top: 1.5em;
+        }
+    }
+    &::after{
+        content: "";
+        display: block;
+        width: 100%;
+        padding-top: 10em; /* 依圖片比例調整 */
+        background: url("../images/02_bg.png")center 0em no-repeat;
+        bottom: 0;
+        @include maxWidth-sm() {
+            background: url("../images/02_bg.png")0 -2em / cover no-repeat;
+            padding-top: 0.5em;
+        }
+    }
+    picture{
+        text-align: center;
+        margin:0 auto;
+        @include maxWidth-sm() {
+            img{
+               margin:1em auto 2em;
+               display: block;
+            }
+        }
+    }
+    img{
+        border-radius: 15px;
+    }
+    .remark {
+        font-size: 14px;
+        margin: 16px 0;
+        line-height: 1.2;
+        color: #fff;
+        .strong {
+            color: #e7ad46;
+        }
+        .strong-2 {
+            color: #34b0d2;
+        }
+    }
     .base-content {
         border-color: #929292;
         .title {
@@ -824,7 +873,22 @@ img {
         }
     }
     @include maxWidth-lg() {
-        padding: 24px 0;
+        padding: 0px 0;
+    }
+    .base-h3-title {
+        width: 744px;
+        aspect-ratio: 744 / 176;
+        .pic-title {
+            transform: translateX(0px);
+        }
+        .text {
+            transform: translateY(40px);
+            text-shadow: 0 0 8px #b1511a, 0 0 8px #b1511a, 0 0 8px #b1511a,
+                0 0 8px #b1511a;
+            @include maxWidth-sm() {
+               transform: translateY(20px);
+            }
+        }
     }
 }
 .section-6 {
@@ -834,12 +898,12 @@ img {
     }
     .buy-item{
         text-align: center;
-        a{
+        
             img{
                 margin: 0 auto;
                 max-width: 100%;
             }
-        }
+        
     }
     .item-info{
         position: relative;
@@ -850,10 +914,13 @@ img {
         text-decoration: none;
         padding: 1.5em;
         line-height: 2;
-        font-size: 1.3em;
+        font-size: 1.2em;
         display: inline-block;
         font-weight: bold;
         box-shadow: 8px 8px 32px #9dcfe6;
+        text-align: center;
+        width: 100%;
+        pointer-events: none;
         @include maxWidth-md() {
             font-size: 1em;
             line-height: 1.5;
@@ -870,14 +937,37 @@ img {
             bottom: 10px;
             border: 2px solid #83acbe;
             border-radius: 10px;
+             pointer-events: none;
         }
         .info-title{
             color: #000;
-            border: 1px solid #000;
+            // border: 1px solid #000;
             display: inline;
             padding: .1em .5em;
             margin-right: .5em;
             font-weight: normal;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        ul{
+            margin: 1em auto 0;
+            display:grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap:2px;
+            @include maxWidth-md() {
+                grid-template-columns: repeat(2, 1fr); 
+                font-size: .8em;
+            }
+            li{
+                border: 1px solid #e4e4e4;
+                box-sizing:border-box;
+                text-align: center;
+                letter-spacing:-1px;
+                &:hover{
+                    background: #328bb0;
+                    color: #fff;
+                }
+            }
         }
     }
     .item-focus{
@@ -902,7 +992,7 @@ img {
             @include maxWidth-md() {
                 width: 100%;
             }
-            a{
+            
                 position: relative;
                 margin: 2em auto 0;
                 background: #e7ad46;
@@ -926,18 +1016,14 @@ img {
                     border: 2px solid #fff;
                     border-radius: 10px;
                 }
-                &:hover{
-                    opacity: .7;
-                }
                 @include maxWidth-md() {
                     font-size: 1.2em;
                 }
-            }
+            
             &+.btn{
-                a{
                    background: #328bb0; 
                        text-shadow: 0 0 10px #0cb7e2, 0 0 10px #0cb7e2, 0 0 10px #0cb7e2, 0 0 10px #0cb7e2, 0 0 10px #0cb7e2;
-                }
+
             }
         }
     }
