@@ -923,6 +923,7 @@ img {
         @include maxWidth-md() {
             font-size: 1em;
             line-height: 1.5;
+            padding: 1.5em 1em;
             p{
                 margin-bottom: .8em;
             }
@@ -960,6 +961,7 @@ img {
             font-size: 1.2em;
             font-weight: bold;
             letter-spacing: .25em;
+            
         }
         ul{
             margin: 1em auto 0;
@@ -992,12 +994,17 @@ img {
                     }
                 }
                 @include maxWidth-md() {
-                    &:nth-child(2n+1){
-                        background: linear-gradient(to bottom,  #f7f7f7 0%,#ffffff 40%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                    
+                &:nth-child(1n+1){
+                    a{
+                        background: transparent;
                     }
-                    &:nth-child(4n-1),&:nth-child(4n) {
-                        background: #e2f0f7;
+                }
+                &:nth-child(4n-1),&:nth-child(4n) {
+                    a{
+                    background: #e2f0f7;       
                     }
+                }
                 }
             }
         }

@@ -959,6 +959,7 @@ a + .section-banner .icon-bar .icon-item:a:hover {
   .section-6 .item-info {
     font-size: 1em;
     line-height: 1.5;
+    padding: 1.5em 1em;
   }
   .section-6 .item-info p {
     margin-bottom: 0.8em;
@@ -1032,11 +1033,10 @@ a + .section-banner .icon-bar .icon-item:a:hover {
   background: #e2f0f7;
 }
 @media screen and (max-width: 767px) {
-  .section-6 .item-info ul li:nth-child(2n+1) {
-    background: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), color-stop(40%, #ffffff));
-    background: linear-gradient(to bottom, #f7f7f7 0%, #ffffff 40%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  .section-6 .item-info ul li:nth-child(1n+1) a {
+    background: transparent;
   }
-  .section-6 .item-info ul li:nth-child(4n-1), .section-6 .item-info ul li:nth-child(4n) {
+  .section-6 .item-info ul li:nth-child(4n-1) a, .section-6 .item-info ul li:nth-child(4n) a {
     background: #e2f0f7;
   }
 }
