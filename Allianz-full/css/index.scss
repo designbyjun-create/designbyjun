@@ -916,7 +916,6 @@ img {
         line-height: 2;
         font-size: 1.2em;
         display: inline-block;
-        font-weight: bold;
         box-shadow: 8px 8px 32px #9dcfe6;
         text-align: center;
         width: 100%;
@@ -939,6 +938,18 @@ img {
             border-radius: 10px;
              pointer-events: none;
         }
+        .info-date{
+            color: #fff;
+            background: #de6227;
+            display: inline-block;
+            padding:0 1em;
+            font-style: italic;
+            font-size: 1.2em;
+            margin:.5em auto;
+            font-weight: bold;
+            border-top-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
         .info-title{
             color: #000;
             // border: 1px solid #000;
@@ -948,24 +959,36 @@ img {
             font-weight: normal;
             font-size: 1.2em;
             font-weight: bold;
+            letter-spacing: .25em;
         }
         ul{
             margin: 1em auto 0;
             display:grid; 
-            grid-template-columns: repeat(4, 1fr); 
-            gap:2px;
+            grid-template-columns: repeat(3, 1fr); 
+            gap:0px;
             @include maxWidth-md() {
                 grid-template-columns: repeat(2, 1fr); 
                 font-size: .8em;
             }
             li{
-                border: 1px solid #e4e4e4;
+                // border: 1px solid #e4e4e4;
                 box-sizing:border-box;
                 text-align: center;
                 letter-spacing:-1px;
-                &:hover{
-                    background: #328bb0;
-                    color: #fff;
+                padding: 0.2em;
+                /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#f7f7f7+0,ffffff+40 */
+                background: linear-gradient(to bottom,  #f7f7f7 0%,#ffffff 40%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+                &:nth-child(2n+1){
+                    background: #e2f0f7;
+                }
+                @include maxWidth-md() {
+                 &:nth-child(2n+1){
+                    background: linear-gradient(to bottom,  #f7f7f7 0%,#ffffff 40%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                  }
+                  &:nth-child(4n-1),&:nth-child(4n) {
+                    background: #e2f0f7;
+                  }
                 }
             }
         }
