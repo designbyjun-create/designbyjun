@@ -1114,6 +1114,24 @@ img {
     }
 }
 
+    .base-h3-title.section-7 {
+        width: 832px;
+        aspect-ratio: 832 / 167;
+        margin: 0 auto;
+        .pic-title {
+            transform: translateX(-20px);
+        }
+        .text {
+            transform: translateY(40px);
+            text-shadow: 0 0 8px #5a2c87, 0 0 8px #5a2c87, 0 0 8px #5a2c87,
+                0 0 8px #5a2c87;
+            @include maxWidth-md{
+                transform: translateY(7px);
+            }
+        }
+    }
+
+
 .sidebar {
     position: fixed;
     display: flex;
