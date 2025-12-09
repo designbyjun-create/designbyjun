@@ -641,13 +641,13 @@ img {
         }
     }
     .section-film-swiper-button-prev {
-        left: -16px;
+        left: -36px;
         @include maxWidth-lg() {
             left: 0;
         }
     }
     .section-film-swiper-button-next {
-        right: -16px;
+        right: -36px;
         @include maxWidth-lg() {
             right: 0;
         }

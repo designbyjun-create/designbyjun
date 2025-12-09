@@ -662,7 +662,7 @@ a + .section-banner .icon-bar .icon-item:a:hover {
           transform: translateY(0);
 }
 .section-film .section-film-swiper-button-prev {
-  left: -16px;
+  left: -36px;
 }
 @media screen and (max-width: 1023px) {
   .section-film .section-film-swiper-button-prev {
@@ -670,7 +670,7 @@ a + .section-banner .icon-bar .icon-item:a:hover {
   }
 }
 .section-film .section-film-swiper-button-next {
-  right: -16px;
+  right: -36px;
 }
 @media screen and (max-width: 1023px) {
   .section-film .section-film-swiper-button-next {
