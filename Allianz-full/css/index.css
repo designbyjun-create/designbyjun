@@ -283,6 +283,10 @@ img {
   }
 }
 
+:root {
+  --swiper-navigation-size: 80px;
+}
+
 .swiper {
   overflow-x: hidden;
 }
@@ -295,28 +299,56 @@ img {
 
 .swiper-button-next,
 .swiper-button-prev {
+  background: url(../images/arrrow.png) center center/contain no-repeat;
+  width: calc(var(--swiper-navigation-size) / 44 * 27);
+  height: var(--swiper-navigation-size);
   -webkit-transition: opacity 0.4s;
   transition: opacity 0.4s;
 }
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
+  -webkit-transition: right 0.3s ease;
+  transition: right 0.3s ease;
   opacity: 0.8;
+  right: -65px;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  content: "";
 }
 
 .swiper-button-prev {
-  left: -48px;
+  left: -58px;
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
 }
 @media screen and (max-width: 1023px) {
   .swiper-button-prev {
     left: -24px;
   }
+  .swiper-button-prev:hover {
+    left: -24px;
+  }
+}
+.swiper-button-prev:hover {
+  left: -65px;
+  -webkit-transition: left 0.3s ease;
+  transition: left 0.3s ease;
+}
+@media screen and (max-width: 640px) {
+  .swiper-button-prev:hover {
+    left: -24px;
+  }
 }
 
 .swiper-button-next {
-  right: -48px;
+  right: -58px;
 }
 @media screen and (max-width: 1023px) {
   .swiper-button-next {
+    right: -24px;
+  }
+  .swiper-button-next:hover {
     right: -24px;
   }
 }
@@ -939,6 +971,25 @@ a + .section-banner .icon-bar .icon-item:a:hover {
   margin: 0 auto;
   max-width: 100%;
 }
+.section-6 .base-h3-title {
+  width: 832px;
+  aspect-ratio: 832/167;
+  margin: 0 auto;
+}
+.section-6 .base-h3-title .pic-title {
+  -webkit-transform: translateX(-20px);
+          transform: translateX(-20px);
+}
+.section-6 .base-h3-title .text {
+  -webkit-transform: translateY(20px);
+          transform: translateY(20px);
+  text-shadow: 0 0 8px #20abd2, 0 0 8px #20abd2, 0 0 8px #20abd2, 0 0 8px #20abd2;
+}
+.section-6 .base-h3-title .text em {
+  display: block;
+  font-size: 0.5em;
+  margin-top: 0.5em;
+}
 .section-6 .item-info {
   position: relative;
   margin: 2em auto;
@@ -1111,7 +1162,7 @@ a + .section-banner .icon-bar .icon-item:a:hover {
   display: -ms-flexbox;
   display: flex;
   gap: 16px;
-  bottom: 160px;
+  bottom: 80px;
   right: 0px;
   z-index: 1;
 }
