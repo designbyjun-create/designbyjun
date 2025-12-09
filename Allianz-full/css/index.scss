@@ -942,10 +942,13 @@ img {
             text-shadow: 0 0 8px #20abd2, 0 0 8px #20abd2, 0 0 8px #20abd2,
                 0 0 8px #20abd2;
                 em{
-            display: block;
-            font-size: .5em;
-            margin-top: .5em;
-        }
+                    display: block;
+                    font-size: .5em;
+                    margin-top: .5em;
+                }
+            @include maxWidth-md{
+                transform: translateY(7px);
+            }
         }
     }
     .item-info{

@@ -990,6 +990,12 @@ a + .section-banner .icon-bar .icon-item:a:hover {
   font-size: 0.5em;
   margin-top: 0.5em;
 }
+@media screen and (max-width: 767px) {
+  .section-6 .base-h3-title .text {
+    -webkit-transform: translateY(7px);
+            transform: translateY(7px);
+  }
+}
 .section-6 .item-info {
   position: relative;
   margin: 2em auto;
