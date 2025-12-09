@@ -629,8 +629,15 @@ img {
     .film {
         width: 100%;
         aspect-ratio: 16 / 9;
-        @include maxWidth-md() {
+        @include maxWidth-sm() {
             aspect-ratio: 4 / 3;
+            transform: translateY(50%);
+        }
+        &.shorts{
+           aspect-ratio: 1 / 16; 
+           height: 550px;
+           width: 300px;
+           transform: translateY(0);
         }
     }
     .section-film-swiper-button-prev {
