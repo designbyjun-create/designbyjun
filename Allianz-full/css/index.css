@@ -182,7 +182,7 @@ img {
   content: "";
   position: absolute;
   bottom: -16px;
-  left: -16px;
+  left: 0px;
   background: #f16212;
   width: var(--line-width);
   height: 2px;
@@ -191,7 +191,7 @@ img {
   content: "";
   position: absolute;
   bottom: -16px;
-  left: calc(var(--line-width) - 16px);
+  left: calc(var(--line-width) - 0px);
   background: #f16212;
   width: 56px;
   height: 2px;
