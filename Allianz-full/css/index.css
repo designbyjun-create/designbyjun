@@ -649,9 +649,9 @@ a + .section-banner .icon-bar .icon-item:a:hover {
 }
 @media screen and (max-width: 640px) {
   .section-film .film {
-    aspect-ratio: 4/3;
-    -webkit-transform: translateY(50%);
-            transform: translateY(50%);
+    width: 100%;
+    aspect-ratio: 16/9; /* 影片比例 */
+    height: auto;
   }
 }
 .section-film .film.shorts {
@@ -660,6 +660,11 @@ a + .section-banner .icon-bar .icon-item:a:hover {
   width: 300px;
   -webkit-transform: translateY(0);
           transform: translateY(0);
+}
+@media screen and (max-width: 640px) {
+  .section-film .film.shorts {
+    aspect-ratio: 9/16;
+  }
 }
 .section-film .section-film-swiper-button-prev {
   left: -36px;

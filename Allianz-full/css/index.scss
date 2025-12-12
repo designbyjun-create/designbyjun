@@ -630,14 +630,18 @@ img {
         width: 100%;
         aspect-ratio: 16 / 9;
         @include maxWidth-sm() {
-            aspect-ratio: 4 / 3;
-            transform: translateY(50%);
+            width: 100%;
+            aspect-ratio: 16 / 9; /* 影片比例 */
+            height: auto;
         }
         &.shorts{
            aspect-ratio: 1 / 16; 
            height: 550px;
            width: 300px;
            transform: translateY(0);
+           @include maxWidth-sm{
+            aspect-ratio: 9 / 16;
+           }
         }
     }
     .section-film-swiper-button-prev {
