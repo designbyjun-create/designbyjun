@@ -822,9 +822,13 @@ a + .section-banner .icon-bar .icon-item:a:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   gap: 16px;
-  bottom: 160px;
-  right: 0px;
+  bottom: 60px;
+  right: 40px;
   z-index: 10;
 }
 .sidebar .sidebar-item {
@@ -836,6 +840,12 @@ a + .section-banner .icon-bar .icon-item:a:hover {
           align-items: center;
   text-align: center;
   text-decoration: none;
+  width: 64px;
+  height: 64px;
+  padding: 8px;
+  font-size: 22px;
+  color: #fff;
+  background: #2943de;
   border-radius: 4px;
   -webkit-transition: 0.4s;
   transition: 0.4s;
