@@ -832,34 +832,45 @@ a + .section-banner .icon-bar .icon-item:a:hover {
   z-index: 10;
 }
 .sidebar .sidebar-item {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  text-align: center;
   text-decoration: none;
+  text-align: center;
   width: 64px;
-  height: 64px;
-  padding: 8px;
-  font-size: 22px;
+  padding: 8px 8px 15px;
+  font-size: 20px;
   color: #fff;
   background: #2943de;
   border-radius: 4px;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
+.sidebar .sidebar-item img {
+  display: block;
+}
 .sidebar .sidebar-item:hover {
-  opacity: 0.8;
+  background: #fe6847;
 }
 @media screen and (max-width: 767px) {
   .sidebar {
-    right: -30px;
+    position: fixed;
+    left: 0;
+    right: 0px;
     bottom: 0;
+    display: block;
   }
   .sidebar .sidebar-item {
-    width: 148px;
+    width: 50%;
+    display: inline-block;
+    padding: 5px;
+    text-align: center;
+    border-radius: 0px;
+    font-size: 18px;
+  }
+  .sidebar .sidebar-item img {
+    width: 28px;
+    height: 28px;
+    display: inline-block;
+    vertical-align: text-bottom;
+    margin-right: 5px;
   }
 }
 
@@ -895,7 +906,7 @@ a + .section-banner .icon-bar .icon-item:a:hover {
     font-size: 12px;
   }
   .footer .copyright {
-    padding: 16px 8px;
+    padding: 16px 8px 50px;
   }
 }
 
