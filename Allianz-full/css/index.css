@@ -563,10 +563,10 @@ a + .section-banner .icon-bar .icon-item:a:hover {
 }
 @media screen and (max-width: 1279px) {
   .section-banner .pic-date {
-    left: calc(50% + 420px - 80px);
+    left: calc(40% + 420px - 80px);
   }
   .section-banner .text-main {
-    left: 45%;
+    left: 35%;
   }
   .section-banner .text-desc {
     padding: 0 0 120px;
@@ -1222,6 +1222,12 @@ a + .section-banner .icon-bar .icon-item:a:hover {
 }
 .sidebar .sidebar-item:hover {
   opacity: 0.8;
+}
+@media (max-height: 768px) {
+  .sidebar {
+    bottom: 0;
+    right: -40px;
+  }
 }
 @media screen and (max-width: 767px) {
   .sidebar {

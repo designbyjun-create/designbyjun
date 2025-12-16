@@ -547,10 +547,10 @@ img {
 
     @include maxWidth-xl() {
         .pic-date {
-            left: calc(50% - -420px - 80px);
+            left: calc(40% - -420px - 80px);
         }
         .text-main {
-            left: 45%;
+            left: 35%;
         }
         .text-desc {
             padding: 0 0 120px;
@@ -1144,25 +1144,18 @@ img {
 
 
 .sidebar {
-    position: fixed;
+    position: fixed; // 確保這行存在且沒有被覆蓋
     display: flex;
-    // display: none;
-    // flex-direction: column;
     gap: 16px;
     bottom: 80px;
     right: 0px;
     z-index: 1;
+    
     .sidebar-item {
         display: flex;
         align-items: center;
         text-align: center;
         text-decoration: none;
-        // width: 64px;
-        // height: 64px;
-        // padding: 8px;
-        // font-size: 24px;
-        // color: #fff;
-        // background: #2943de;
         border-radius: 4px;
         transition: 0.4s;
 
@@ -1171,13 +1164,18 @@ img {
         }
     }
 
+    // 針對高度不足的螢幕進行調整
+    @media (max-height: 768px) {
+        bottom: 0;
+        right: -40px;
+    }
+
     @include maxWidth-md() {
         right: -30px;
         bottom: 0;
+        
         .sidebar-item {
             width: 148px;
-            // height: 48px;
-            // font-size: 14px;
         }
     }
 }
