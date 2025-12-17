@@ -124,7 +124,7 @@
                 </div>
             </div>
         </div>
-
+        
         <div id="app" v-cloak>
             <!-- <header class="header">
                 <div class="base-wrapper">
@@ -270,16 +270,16 @@
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
                                     <iframe
-                                        src="https://www.youtube.com/embed/_nnCtG_2W-8"
+                                        src="https://www.youtube.com/embed/cCty4r_cAzE"
                                         title="YouTube video player"
-                                        class="film"
+                                        class="film shorts"
                                     ></iframe>
                                 </div>
                                 <div class="swiper-slide">
                                     <iframe
-                                        src="https://www.youtube.com/embed/cCty4r_cAzE"
+                                        src="https://www.youtube.com/embed/i0ls93mCt0k"
                                         title="YouTube video player"
-                                        class="film shorts"
+                                        class="film"
                                     ></iframe>
                                 </div>
                                 <div class="swiper-slide">
@@ -866,7 +866,7 @@
                 </section>
 
 
-                <section class="section-6" id="F1">
+                <section class="section-6" id="targetSection">
                     <div class="base-wrapper">
                         <div class="base-h3-title" data-aos="fade-up">
                             <img
@@ -930,8 +930,8 @@
 
             </main>
 
-            <aside class="sidebar">
-                <a class="sidebar-item" title="立即申購" href="#F1"><img src="images/buy.png" alt=""></a>
+            <aside class="sidebar" data-aos="fade-up" data-aos-delay="3000">
+                <a class="sidebar-item" title="立即申購" href="javascript:void(0)" id="goToSection"><img src="images/buy.png" alt=""></a>
                 <!-- <a class="sidebar-item" title="如何申購" href="https://www.yuanta.com.tw/file-repository/content/IPO/index.html?utm_source=officialweb_campaign&utm_medium=buttonl&utm_campaign=etf_0050">如何申購</a> -->
                 <!-- <a class="sidebar-item" title="立即申購" href="/">立即申購</a> -->
             </aside>
@@ -971,21 +971,74 @@
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-            $(document).ready(function () {
-                $(".btn-area .btn a").click(function (e) {
-                    e.preventDefault();
+           // 防止瀏覽器記住滾動位置
+if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
+}
 
-                    const $lightBox = $(".lightBox");
+window.scrollTo(0, 0);
 
-                    // 添加 hiding class 觸發淡出
-                    $lightBox.addClass("hiding");
+$(document).ready(function () {
+    $('html, body').scrollTop(0);
+    
+    // 處理 Lightbox 關閉
+    $(".btn-area .btn a").click(function (e) {
+        e.preventDefault();
+        const $lightBox = $(".lightBox");
+        $lightBox.addClass("hiding");
 
-                    // 等待動畫完成後移除
-                    setTimeout(function () {
-                        $lightBox.removeClass("show hiding");
-                    }, 500);
-                });
+        setTimeout(function () {
+            $lightBox.removeClass("show hiding");
+        }, 500);
+    });
+
+    // 處理 捲動到目標區塊 - 解決 lazy loading 問題
+    $('#goToSection').click(function (e) {
+        e.preventDefault();
+
+        const target = document.getElementById('targetSection');
+        if (!target) return;
+
+        // 步驟 1：強制載入所有 lazy loading 的圖片
+        const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+        lazyImages.forEach(img => {
+            // 移除 loading="lazy" 屬性，強制立即載入
+            img.loading = 'eager';
+            
+            // 如果圖片還沒載入，強制觸發載入
+            if (!img.complete) {
+                const src = img.src;
+                img.src = '';
+                img.src = src;
+            }
+        });
+
+        // 步驟 2：等待圖片載入完成
+        const imagePromises = Array.from(lazyImages).map(img => {
+            if (img.complete) {
+                return Promise.resolve();
+            }
+            return new Promise(resolve => {
+                img.onload = resolve;
+                img.onerror = resolve; // 即使載入失敗也繼續
             });
+        });
+
+        // 步驟 3：所有圖片載入完成後，再計算位置並滾動
+        Promise.all(imagePromises).then(() => {
+            // 圖片都載入完成了，現在計算的位置才是正確的
+            const targetPosition = $(target).offset().top - 20;
+            
+            $('html, body').animate({
+                scrollTop: targetPosition
+            }, 800);
+        });
+    });
+});
+
+$(window).on('load', function() {
+    window.scrollTo(0, 0);
+});
         </script>
         <script src="js/main.min.js?v=20251204" type="module"></script>
     </body>
