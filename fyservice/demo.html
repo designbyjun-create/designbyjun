@@ -720,18 +720,18 @@
               <div class="counter-group">
                 <label class="counter-label">大人</label>
                 <div class="counter">
-                  <button type="button" class="counter-btn">−</button>
-                  <input type="number" class="counter-input" value="2" min="0">
-                  <button type="button" class="counter-btn">+</button>
+                  <button type="button" class="counter-btn" data-action="decrease" data-target="adults">−</button>
+                  <input type="number" id="adults" class="counter-input" value="2" min="0">
+                  <button type="button" class="counter-btn" data-action="increase" data-target="adults">+</button>
                 </div>
               </div>
-              
+
               <div class="counter-group">
                 <label class="counter-label">小孩</label>
                 <div class="counter">
-                  <button type="button" class="counter-btn">−</button>
-                  <input type="number" class="counter-input" value="0" min="0">
-                  <button type="button" class="counter-btn">+</button>
+                  <button type="button" class="counter-btn" data-action="decrease" data-target="kids">−</button>
+                  <input type="number" id="kids" class="counter-input" value="0" min="0">
+                  <button type="button" class="counter-btn" data-action="increase" data-target="kids">+</button>
                 </div>
               </div>
             </div>
@@ -745,18 +745,18 @@
               <div class="counter-group">
                 <label class="counter-label">行李件數</label>
                 <div class="counter">
-                  <button type="button" class="counter-btn">−</button>
-                  <input type="number" class="counter-input" value="2" min="0">
-                  <button type="button" class="counter-btn">+</button>
+                  <button type="button" class="counter-btn" data-action="decrease" data-target="luggage">−</button>
+                  <input type="number" id="luggage" class="counter-input" value="2" min="0">
+                  <button type="button" class="counter-btn" data-action="increase" data-target="luggage">+</button>
                 </div>
               </div>
-              
+
               <div class="counter-group">
                 <label class="counter-label">推車</label>
                 <div class="counter">
-                  <button type="button" class="counter-btn">−</button>
-                  <input type="number" class="counter-input" value="0" min="0">
-                  <button type="button" class="counter-btn">+</button>
+                  <button type="button" class="counter-btn" data-action="decrease" data-target="carryOn">−</button>
+                  <input type="number" id="carryOn" class="counter-input" value="0" min="0">
+                  <button type="button" class="counter-btn" data-action="increase" data-target="carryOn">+</button>
                 </div>
               </div>
             </div>
@@ -925,6 +925,12 @@
   <div class="toast hidden">
     <span class="toast-message">已複製到剪貼簿</span>
   </div>
-  
+
+  <!-- JavaScript -->
+  <script src="scripts/config.js"></script>
+  <script src="scripts/calculator.js"></script>
+  <script src="scripts/formatter.js"></script>
+  <script src="scripts/main.js"></script>
+
 </body>
 </html>
