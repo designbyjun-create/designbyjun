@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>包車行程報價產生器</title>
+  <style>
+    /* CSS Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #111827;
+      background-color: #f9fafb;
+    }
+
+    /* 隱藏類別 */
+    .hidden {
+      display: none !important;
+    }
+
+    /* 主容器 */
+    .container {
+      max-width: 1920px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 頂部標題列 */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      background-color: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1020;
+    }
+
+    .header-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2563eb;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* 主要內容區 */
+    .main-content {
+      flex: 1;
+      display: flex;
+      gap: 24px;
+      padding: 24px;
+    }
+
+    /* 左側編輯區 */
+    .editor-panel {
+      flex: 0 0 40%;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      overflow-y: auto;
+      max-height: calc(100vh - 64px - 48px);
+    }
+
+    /* 滾動條樣式 */
+    .editor-panel::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .editor-panel::-webkit-scrollbar-track {
+      background: #f3f4f6;
+      border-radius: 9999px;
+    }
+
+    .editor-panel::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 9999px;
+    }
+
+    .editor-panel::-webkit-scrollbar-thumb:hover {
+      background: #9ca3af;
+    }
+
+    /* 右側預覽區 */
+    .preview-panel {
+      flex: 0 0 60%;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: calc(64px + 24px);
+      height: calc(100vh - 64px - 48px);
+    }
+
+    .preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .preview-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .preview-content {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+    }
+
+    .preview-content::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .preview-content::-webkit-scrollbar-track {
+      background: #f3f4f6;
+      border-radius: 9999px;
+    }
+
+    .preview-content::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 9999px;
+    }
+
+    .preview-output {
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.75;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      color: #111827;
+    }
+
+    .preview-actions {
+      padding: 24px;
+      border-top: 1px solid #e5e7eb;
+      background-color: #f9fafb;
+    }
+
+    /* 區塊 */
+    .section {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+
+    .section-title {
+      padding: 16px 24px;
+      background-color: #eff6ff;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 18px;
+      font-weight: 600;
+      color: #1e40af;
+    }
+
+    .section-content {
+      padding: 24px;
+    }
+
+    /* 按鈕 */
+    .btn {
+      padding: 8px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn-primary {
+      background-color: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-primary:hover {
+      background-color: #1d4ed8;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-secondary {
+      background-color: #ffffff;
+      color: #2563eb;
+      border: 1px solid #e5e7eb;
+    }
+
+    .btn-secondary:hover {
+      background-color: #eff6ff;
+      border-color: #2563eb;
+    }
+
+    .btn-copy {
+      width: 100%;
+      font-size: 16px;
+      padding: 12px 24px;
+    }
+
+    /* 表單 */
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #111827;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #111827;
+      background-color: #ffffff;
+      transition: all 0.2s;
+    }
+
+    .form-input:hover {
+      border-color: #d1d5db;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .form-input::placeholder {
+      color: #6b7280;
+    }
+
+    /* Radio 群組 */
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .radio-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #111827;
+      user-select: none;
+    }
+
+    .radio-label input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      cursor: pointer;
+      accent-color: #2563eb;
+    }
+
+    .radio-label:hover {
+      color: #2563eb;
+    }
+
+    /* Checkbox 群組 */
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .checkbox-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #111827;
+      user-select: none;
+      padding: 8px;
+      border-radius: 6px;
+      transition: background-color 0.2s;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      cursor: pointer;
+      accent-color: #2563eb;
+    }
+
+    .checkbox-label:hover {
+      background-color: #eff6ff;
+    }
+
+    /* 計數器 */
+    .counter-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .counter-label {
+      font-size: 14px;
+      color: #111827;
+      flex: 1;
+    }
+
+    .counter {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .counter-btn {
+      width: 32px;
+      height: 32px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      background-color: #ffffff;
+      color: #111827;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .counter-btn:hover {
+      background-color: #eff6ff;
+      border-color: #2563eb;
+      color: #2563eb;
+    }
+
+    .counter-btn:active {
+      transform: scale(0.95);
+    }
+
+    .counter-input {
+      width: 60px;
+      text-align: center;
+      padding: 4px 8px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* 分隔線 */
+    .divider {
+      height: 1px;
+      background-color: #e5e7eb;
+      margin: 24px 0;
+    }
+
+    /* 文字樣式 */
+    .text-muted {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .text-info {
+      color: #3b82f6;
+      font-size: 14px;
+    }
+
+    /* 建議框 */
+    .suggestion-box {
+      background-color: #eff6ff;
+      border-left: 4px solid #2563eb;
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .suggestion-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #2563eb;
+      margin-bottom: 4px;
+    }
+
+    .suggestion-text {
+      font-size: 14px;
+      color: #111827;
+      line-height: 1.5;
+    }
+
+    /* 資訊顯示 */
+    .info-display {
+      padding: 16px;
+      background-color: #f9fafb;
+      border-radius: 6px;
+    }
+
+    .info-display p {
+      font-size: 14px;
+      color: #111827;
+      margin: 0;
+    }
+
+    /* Day Tabs */
+    .day-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+
+    .day-tab {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      background-color: #f3f4f6;
+      color: #4b5563;
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .day-tab:hover {
+      background-color: #dbeafe;
+      color: #2563eb;
+    }
+
+    .day-tab.active {
+      background-color: #2563eb;
+      color: #ffffff;
+    }
+
+    .day-tab-add {
+      padding: 8px 16px;
+      border: 2px dashed #e5e7eb;
+      border-radius: 6px;
+      background-color: #ffffff;
+      color: #4b5563;
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .day-tab-add:hover {
+      border-color: #2563eb;
+      color: #2563eb;
+    }
+
+    /* Day 編輯器 */
+    .day-editor {
+      display: none;
+    }
+
+    .day-editor.active {
+      display: block;
+    }
+
+    /* 景點容器 */
+    .spots-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .spot-item {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .spot-item .form-input {
+      flex: 1;
+    }
+
+    .btn-remove-spot {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      background-color: #ffffff;
+      color: #ef4444;
+      font-size: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .btn-remove-spot:hover {
+      background-color: #fee2e2;
+      border-color: #ef4444;
+    }
+
+    /* Toast 通知 */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      background-color: #1f2937;
+      color: #ffffff;
+      padding: 16px 24px;
+      border-radius: 12px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      z-index: 1080;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .toast.hidden {
+      opacity: 0;
+      transform: translateY(16px);
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 手機版 RWD */
+    @media (max-width: 767px) {
+      .header {
+        padding: 16px;
+      }
+
+      .header-title {
+        font-size: 20px;
+      }
+
+      .main-content {
+        flex-direction: column;
+        padding: 16px;
+        gap: 0;
+      }
+
+      .editor-panel {
+        flex: 1;
+        max-height: none;
+        overflow-y: visible;
+        gap: 16px;
+      }
+
+      .section-title {
+        padding: 16px;
+        font-size: 16px;
+      }
+
+      .section-content {
+        padding: 16px;
+      }
+
+      .preview-panel {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: auto;
+        height: auto;
+        max-height: 50vh;
+        border-radius: 12px 12px 0 0;
+        box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+        z-index: 1030;
+      }
+
+      .preview-header {
+        padding: 16px;
+      }
+
+      .preview-title {
+        font-size: 18px;
+      }
+
+      .preview-content {
+        padding: 16px;
+      }
+
+      .preview-output {
+        font-size: 22px;
+        line-height: 1.6;
+      }
+
+      .preview-actions {
+        padding: 16px;
+      }
+
+      .toast {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+      }
+    }
+
+    /* 平板版 RWD */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .editor-panel {
+        flex: 0 0 50%;
+      }
+
+      .preview-panel {
+        flex: 0 0 50%;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- 主容器 -->
+  <div class="container">
+    
+    <!-- 頂部標題列 -->
+    <header class="header">
+      <h1 class="header-title">包車行程報價產生器</h1>
+      <div class="header-actions">
+        <button class="btn btn-secondary" id="btnReset" type="button">
+          🔄 重置
+        </button>
+      </div>
+    </header>
+    
+    <!-- 主要內容區 -->
+    <main class="main-content">
+      
+      <!-- 左側編輯區 -->
+      <aside class="editor-panel">
+        
+        <!-- 基本資訊區塊 -->
+        <section class="section section-basic">
+          <h2 class="section-title">📅 基本資訊</h2>
+          <div class="section-content">
+            
+            <!-- 日期選擇 -->
+            <div class="form-group">
+              <label class="form-label">日期類型</label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="dateType" value="single" checked>
+                  <span>單日</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="dateType" value="multiple">
+                  <span>多日</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="dateType" value="flexible">
+                  <span>彈性</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="dateType" value="uncertain">
+                  <span>不確定</span>
+                </label>
+              </div>
+            </div>
+            
+            <!-- 單日日期 -->
+            <div class="form-group" id="singleDateGroup">
+              <label class="form-label" for="singleDate">日期</label>
+              <input type="date" id="singleDate" class="form-input">
+            </div>
+            
+            <!-- 多日日期 -->
+            <div class="form-group hidden" id="multipleDateGroup">
+              <label class="form-label" for="startDate">起始日</label>
+              <input type="date" id="startDate" class="form-input">
+              <label class="form-label" for="endDate">結束日</label>
+              <input type="date" id="endDate" class="form-input">
+            </div>
+            
+            <div class="divider"></div>
+            
+            <!-- 人數設定 -->
+            <div class="form-group">
+              <label class="form-label">👥 人數</label>
+              
+              <div class="counter-group">
+                <label class="counter-label">大人</label>
+                <div class="counter">
+                  <button type="button" class="counter-btn">−</button>
+                  <input type="number" class="counter-input" value="2" min="0">
+                  <button type="button" class="counter-btn">+</button>
+                </div>
+              </div>
+              
+              <div class="counter-group">
+                <label class="counter-label">小孩</label>
+                <div class="counter">
+                  <button type="button" class="counter-btn">−</button>
+                  <input type="number" class="counter-input" value="0" min="0">
+                  <button type="button" class="counter-btn">+</button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <!-- 行李設定 -->
+            <div class="form-group">
+              <label class="form-label">🧳 行李</label>
+              
+              <div class="counter-group">
+                <label class="counter-label">行李件數</label>
+                <div class="counter">
+                  <button type="button" class="counter-btn">−</button>
+                  <input type="number" class="counter-input" value="2" min="0">
+                  <button type="button" class="counter-btn">+</button>
+                </div>
+              </div>
+              
+              <div class="counter-group">
+                <label class="counter-label">推車</label>
+                <div class="counter">
+                  <button type="button" class="counter-btn">−</button>
+                  <input type="number" class="counter-input" value="0" min="0">
+                  <button type="button" class="counter-btn">+</button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <!-- 汽座顯示 -->
+            <div class="form-group">
+              <label class="form-label">🪑 汽座（自動計算）</label>
+              <div class="info-display">
+                <p class="text-muted">無需汽座</p>
+              </div>
+            </div>
+            
+          </div>
+        </section>
+        
+        <!-- 車款選擇區塊 -->
+        <section class="section section-vehicle">
+          <h2 class="section-title">🚗 車款選擇</h2>
+          <div class="section-content">
+            
+            <!-- 系統建議 -->
+            <div class="suggestion-box">
+              <p class="suggestion-label">💡 系統建議：</p>
+              <p class="suggestion-text">2大 + 2件行李，建議 7座</p>
+            </div>
+            
+            <!-- 車款選項 -->
+            <div class="form-group">
+              <label class="form-label">請選擇提供方案</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" name="vehicle" value="7座" checked>
+                  <span>7人座舒適款</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" name="vehicle" value="10座">
+                  <span>10人座海獅</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" name="vehicle" value="14座">
+                  <span>14人座海獅</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" name="vehicle" value="19座">
+                  <span>19座考斯特</span>
+                </label>
+              </div>
+            </div>
+            
+          </div>
+        </section>
+        
+        <!-- 行程編輯區塊 -->
+        <section class="section section-itinerary">
+          <h2 class="section-title">🗺️ 行程編輯</h2>
+          <div class="section-content">
+            
+            <!-- Day Tabs -->
+            <div class="day-tabs">
+              <button class="day-tab active">Day 1</button>
+              <button class="day-tab-add">+ 新增一天</button>
+            </div>
+            
+            <!-- Day 1 編輯區 -->
+            <div class="day-editor active">
+              
+              <!-- 行程類型 -->
+              <div class="form-group">
+                <label class="form-label">行程類型</label>
+                <div class="radio-group">
+                  <label class="radio-label">
+                    <input type="radio" name="tripType_1" value="oneway" checked>
+                    <span>單程</span>
+                  </label>
+                  <label class="radio-label">
+                    <input type="radio" name="tripType_1" value="roundtrip">
+                    <span>往返一日遊</span>
+                  </label>
+                  <label class="radio-label">
+                    <input type="radio" name="tripType_1" value="shuttle">
+                    <span>接送來回</span>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- 指定時間 -->
+              <div class="form-group">
+                <label class="checkbox-label">
+                  <input type="checkbox">
+                  <span>指定時間</span>
+                </label>
+                <input type="time" class="form-input hidden">
+              </div>
+              
+              <!-- 起點 -->
+              <div class="form-group">
+                <label class="form-label">起點</label>
+                <input type="text" class="form-input" placeholder="例：成田機場">
+              </div>
+              
+              <!-- 終點 -->
+              <div class="form-group">
+                <label class="form-label">終點</label>
+                <input type="text" class="form-input" placeholder="例：東京市區">
+              </div>
+              
+              <!-- 用車時數 -->
+              <div class="form-group">
+                <label class="form-label">用車時數</label>
+                <div class="suggestion-box">
+                  <p class="suggestion-label">💡 建議：不標註（單程）</p>
+                </div>
+                <select class="form-input">
+                  <option value="">不標註</option>
+                  <option value="6">6 小時</option>
+                  <option value="8">8 小時</option>
+                  <option value="10">10 小時</option>
+                  <option value="12">12 小時</option>
+                </select>
+              </div>
+              
+              <!-- 過夜設定 -->
+              <div class="form-group">
+                <label class="checkbox-label">
+                  <input type="checkbox">
+                  <span>當晚司機留在當地（支付住宿費）</span>
+                </label>
+              </div>
+              
+            </div>
+            
+          </div>
+        </section>
+        
+      </aside>
+      
+      <!-- 右側預覽區 -->
+      <section class="preview-panel">
+        <div class="preview-header">
+          <h2 class="preview-title">📄 即時預覽</h2>
+        </div>
+        
+        <div class="preview-content">
+          <div class="preview-output">日期：2025/01/15
+人數：2大
+行李：2件
+車款：7人座舒適款
+行程：
+成田機場至東京市區-單程</div>
+        </div>
+        
+        <div class="preview-actions">
+          <button class="btn btn-primary btn-copy">
+            📋 複製格式
+          </button>
+        </div>
+      </section>
+      
+    </main>
+    
+  </div>
+  
+  <!-- Toast 通知 -->
+  <div class="toast hidden">
+    <span class="toast-message">已複製到剪貼簿</span>
+  </div>
+  
+</body>
+</html>

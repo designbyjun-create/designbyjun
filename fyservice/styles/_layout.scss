@@ -1,0 +1,310 @@
+// _layout.scss
+// 主要佈局樣式
+
+@import 'variables';
+@import 'mixins';
+
+// 主容器
+.container {
+  max-width: 1920px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// 頂部標題列
+.header {
+  @include flex-between;
+  padding: $spacing-md $spacing-lg;
+  background-color: $white;
+  border-bottom: 1px solid $border-color;
+  box-shadow: $shadow-sm;
+  position: sticky;
+  top: 0;
+  z-index: $z-index-sticky;
+  
+  @include mobile {
+    padding: $spacing-md;
+  }
+}
+
+.header-title {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $primary-blue;
+  
+  @include mobile {
+    font-size: $font-size-xl;
+  }
+}
+
+.header-actions {
+  @include flex-end;
+  gap: $spacing-sm;
+}
+
+// 主要內容區
+.main-content {
+  flex: 1;
+  display: flex;
+  gap: $spacing-lg;
+  padding: $spacing-lg;
+  
+  @include mobile {
+    flex-direction: column;
+    padding: $spacing-md;
+    gap: 0;
+  }
+  
+  @include tablet {
+    gap: $spacing-md;
+  }
+}
+
+// 左側編輯區
+.editor-panel {
+  flex: 0 0 $editor-panel-width;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  overflow-y: auto;
+  max-height: calc(100vh - #{$header-height} - #{$spacing-lg * 2});
+  @include custom-scrollbar;
+  
+  @include mobile {
+    flex: 1;
+    max-height: none;
+    overflow-y: visible;
+    gap: $spacing-md;
+  }
+  
+  @include tablet {
+    flex: 0 0 50%;
+  }
+}
+
+// 右側預覽區
+.preview-panel {
+  flex: 0 0 $preview-panel-width;
+  background-color: $white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: calc(#{$header-height} + #{$spacing-lg});
+  height: calc(100vh - #{$header-height} - #{$spacing-lg * 2});
+  
+  @include mobile {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    height: auto;
+    max-height: 50vh;
+    border-radius: $radius-lg $radius-lg 0 0;
+    box-shadow: $shadow-xl;
+    z-index: $z-index-fixed;
+    transition: transform $transition-base ease-in-out;
+    
+    &.collapsed {
+      transform: translateY(calc(100% - 60px));
+    }
+  }
+  
+  @include tablet {
+    flex: 0 0 50%;
+  }
+}
+
+.preview-header {
+  @include flex-between;
+  padding: $spacing-lg;
+  border-bottom: 1px solid $border-color;
+  
+  @include mobile {
+    padding: $spacing-md;
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+.preview-title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  
+  @include mobile {
+    font-size: $font-size-lg;
+  }
+}
+
+.btn-toggle-preview {
+  @include button-reset;
+  display: none;
+  padding: $spacing-xs $spacing-sm;
+  color: $primary-blue;
+  font-size: $font-size-sm;
+  
+  @include mobile {
+    display: block;
+  }
+  
+  .toggle-text::after {
+    content: ' ▼';
+  }
+  
+  .collapsed & .toggle-text::after {
+    content: ' ▲';
+  }
+}
+
+.preview-content {
+  flex: 1;
+  padding: $spacing-lg;
+  overflow-y: auto;
+  @include custom-scrollbar;
+  
+  @include mobile {
+    padding: $spacing-md;
+  }
+}
+
+.preview-output {
+  font-family: 'Courier New', monospace;
+  font-size: $font-size-sm;
+  line-height: $line-height-relaxed;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: $text-primary;
+  
+  @include mobile {
+    font-size: 22px;  // 手機版放大字體
+    line-height: 1.6;
+  }
+}
+
+.preview-actions {
+  padding: $spacing-lg;
+  border-top: 1px solid $border-color;
+  background-color: $bg-secondary;
+  
+  @include mobile {
+    padding: $spacing-md;
+  }
+}
+
+// 區塊（Section）
+.section {
+  background-color: $white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+  overflow: hidden;
+}
+
+.section-title {
+  padding: $spacing-md $spacing-lg;
+  background-color: $light-blue-bg;
+  border-bottom: 1px solid $border-color;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $dark-blue;
+  
+  @include mobile {
+    padding: $spacing-md;
+    font-size: $font-size-base;
+  }
+}
+
+.section-content {
+  padding: $spacing-lg;
+  
+  @include mobile {
+    padding: $spacing-md;
+  }
+}
+
+// Day Tabs
+.day-tabs {
+  display: flex;
+  gap: $spacing-xs;
+  margin-bottom: $spacing-lg;
+  overflow-x: auto;
+  @include custom-scrollbar(4px);
+  
+  @include mobile {
+    margin-bottom: $spacing-md;
+  }
+}
+
+.day-tab {
+  @include button-reset;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-md;
+  background-color: $bg-tertiary;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  white-space: nowrap;
+  @include transition(background-color, color);
+  
+  &:hover {
+    background-color: $light-blue;
+    color: $primary-blue;
+  }
+  
+  &.active {
+    background-color: $primary-blue;
+    color: $white;
+  }
+}
+
+.day-tab-add {
+  @include button-reset;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-md;
+  background-color: $white;
+  border: 2px dashed $border-color;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  white-space: nowrap;
+  @include transition(border-color, color);
+  
+  &:hover {
+    border-color: $primary-blue;
+    color: $primary-blue;
+  }
+}
+
+// Day 編輯區
+.day-editor {
+  display: none;
+  
+  &.active {
+    display: block;
+  }
+}
+
+// 預覽文字區域
+.day-preview {
+  background-color: $light-blue-bg;
+  border: 1px solid $light-blue;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+}
+
+.preview-text {
+  font-family: 'Courier New', monospace;
+  font-size: $font-size-sm;
+  line-height: $line-height-relaxed;
+  color: $text-primary;
+  white-space: pre-wrap;
+  
+  &:empty::before {
+    content: '尚未填寫完整資訊';
+    color: $text-muted;
+  }
+}

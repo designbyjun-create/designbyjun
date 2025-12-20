@@ -1,0 +1,119 @@
+// _reset.scss
+// CSS Reset 和基礎樣式重置
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+// 移除 list 樣式
+ul,
+ol {
+  list-style: none;
+}
+
+// 圖片
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// 連結
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+// 按鈕
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+// 表單元素
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+// 移除 number input 的上下箭頭
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+// 移除 search input 的 X 按鈕
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
+// 移除 date input 的日曆圖示（部分瀏覽器）
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+// fieldset
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+// 標題
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+// 水平線
+hr {
+  border: none;
+  border-top: 1px solid currentColor;
+  margin: 0;
+}
+
+// 表格
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+// 引用
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+  content: '';
+  content: none;
+}

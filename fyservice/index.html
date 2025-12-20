@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="包車行程報價產生器 - 旅乘日本自由行包車內部工具">
+  <title>包車行程報價產生器</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  
+  <!-- 主容器 -->
+  <div class="container">
+    
+    <!-- 頂部標題列 -->
+    <header class="header">
+      <h1 class="header-title">包車行程報價產生器</h1>
+      <div class="header-actions">
+        <button class="btn btn-secondary" id="btnReset" type="button">
+          🔄 重置
+        </button>
+      </div>
+    </header>
+    
+    <!-- 主要內容區 -->
+    <main class="main-content">
+      
+      <!-- 左側編輯區 -->
+      <aside class="editor-panel">
+        
+        <!-- 基本資訊區塊 -->
+        <section class="section section-basic">
+          <h2 class="section-title">📅 基本資訊</h2>
+          <div class="section-content">
+            
+            <!-- 日期選擇 -->
+            <div class="form-group">
+              <label class="form-label">日期類型</label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="dateType" value="single" checked>
+                  <span>單日</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="dateType" value="multiple">
+                  <span>多日</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="dateType" value="flexible">
+                  <span>彈性</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="dateType" value="uncertain">
+                  <span>不確定</span>
+                </label>
+              </div>
+            </div>
+            
+            <!-- 單日日期 -->
+            <div class="form-group" id="singleDateGroup">
+              <label class="form-label" for="singleDate">日期</label>
+              <input type="date" id="singleDate" class="form-input">
+            </div>
+            
+            <!-- 多日日期 -->
+            <div class="form-group hidden" id="multipleDateGroup">
+              <label class="form-label" for="startDate">起始日</label>
+              <input type="date" id="startDate" class="form-input">
+              <label class="form-label" for="endDate">結束日</label>
+              <input type="date" id="endDate" class="form-input">
+            </div>
+            
+            <div class="divider"></div>
+            
+            <!-- 人數設定 -->
+            <div class="form-group">
+              <label class="form-label">👥 人數</label>
+              
+              <div class="counter-group">
+                <label class="counter-label">大人</label>
+                <div class="counter">
+                  <button type="button" class="counter-btn" data-action="decrease" data-target="adults">−</button>
+                  <input type="number" id="adults" class="counter-input" value="2" min="0" max="50">
+                  <button type="button" class="counter-btn" data-action="increase" data-target="adults">+</button>
+                </div>
+              </div>
+              
+              <div class="counter-group">
+                <label class="counter-label">小孩</label>
+                <div class="counter">
+                  <button type="button" class="counter-btn" data-action="decrease" data-target="kids">−</button>
+                  <input type="number" id="kids" class="counter-input" value="0" min="0" max="20">
+                  <button type="button" class="counter-btn" data-action="increase" data-target="kids">+</button>
+                </div>
+              </div>
+              
+              <!-- 小孩年齡 -->
+              <div id="kidsAgeGroup" class="kids-age-group hidden">
+                <!-- 動態生成 -->
+              </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <!-- 行李設定 -->
+            <div class="form-group">
+              <label class="form-label">🧳 行李</label>
+              
+              <div class="counter-group">
+                <label class="counter-label">行李件數</label>
+                <div class="counter">
+                  <button type="button" class="counter-btn" data-action="decrease" data-target="luggage">−</button>
+                  <input type="number" id="luggage" class="counter-input" value="2" min="0" max="50">
+                  <button type="button" class="counter-btn" data-action="increase" data-target="luggage">+</button>
+                </div>
+              </div>
+              
+              <div class="counter-group">
+                <label class="counter-label">推車</label>
+                <div class="counter">
+                  <button type="button" class="counter-btn" data-action="decrease" data-target="stroller">−</button>
+                  <input type="number" id="stroller" class="counter-input" value="0" min="0" max="10">
+                  <button type="button" class="counter-btn" data-action="increase" data-target="stroller">+</button>
+                </div>
+              </div>
+              
+              <div class="counter-group">
+                <label class="counter-label">登機箱</label>
+                <div class="counter">
+                  <button type="button" class="counter-btn" data-action="decrease" data-target="carryOn">−</button>
+                  <input type="number" id="carryOn" class="counter-input" value="0" min="0" max="10">
+                  <button type="button" class="counter-btn" data-action="increase" data-target="carryOn">+</button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <!-- 汽座顯示（自動計算） -->
+            <div class="form-group">
+              <label class="form-label">🪑 汽座（自動計算）</label>
+              <div id="carSeatDisplay" class="info-display">
+                <p class="text-muted">無需汽座</p>
+              </div>
+            </div>
+            
+          </div>
+        </section>
+        
+        <!-- 車款選擇區塊 -->
+        <section class="section section-vehicle">
+          <h2 class="section-title">🚗 車款選擇</h2>
+          <div class="section-content">
+            
+            <!-- 系統建議 -->
+            <div id="vehicleSuggestion" class="suggestion-box hidden">
+              <p class="suggestion-label">💡 系統建議：</p>
+              <p id="suggestionText" class="suggestion-text"></p>
+            </div>
+            
+            <!-- 車款選項 -->
+            <div class="form-group">
+              <label class="form-label">請選擇提供方案</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" name="vehicle" value="7座" data-capacity-people="6" data-capacity-luggage="4">
+                  <span>7人座舒適款</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" name="vehicle" value="10座" data-capacity-people="9" data-capacity-luggage="7">
+                  <span>10人座海獅</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" name="vehicle" value="14座" data-capacity-people="13" data-capacity-luggage="10">
+                  <span>14人座海獅</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" name="vehicle" value="19座" data-capacity-people="18" data-capacity-luggage="15">
+                  <span>19座考斯特</span>
+                </label>
+              </div>
+            </div>
+            
+            <!-- 已選車款提示 -->
+            <div id="selectedVehicles" class="selected-info hidden">
+              <p class="text-info"></p>
+            </div>
+            
+          </div>
+        </section>
+        
+        <!-- 行程編輯區塊 -->
+        <section class="section section-itinerary">
+          <h2 class="section-title">🗺️ 行程編輯</h2>
+          <div class="section-content">
+            
+            <!-- Day Tabs -->
+            <div class="day-tabs" id="dayTabs">
+              <button class="day-tab active" data-day="1">Day 1</button>
+              <button class="day-tab-add" id="btnAddDay">+ 新增一天</button>
+            </div>
+            
+            <!-- Day 編輯區 -->
+            <div id="dayEditors">
+              <!-- Day 1 預設 -->
+              <div class="day-editor active" data-day="1">
+                
+                <!-- 行程類型 -->
+                <div class="form-group">
+                  <label class="form-label">行程類型</label>
+                  <div class="radio-group">
+                    <label class="radio-label">
+                      <input type="radio" name="tripType_1" value="oneway" checked>
+                      <span>單程</span>
+                    </label>
+                    <label class="radio-label">
+                      <input type="radio" name="tripType_1" value="roundtrip">
+                      <span>往返一日遊</span>
+                    </label>
+                    <label class="radio-label">
+                      <input type="radio" name="tripType_1" value="shuttle">
+                      <span>接送來回</span>
+                    </label>
+                  </div>
+                </div>
+                
+                <!-- 指定時間 -->
+                <div class="form-group">
+                  <label class="checkbox-label">
+                    <input type="checkbox" class="time-checkbox" data-day="1">
+                    <span>指定時間</span>
+                  </label>
+                  <input type="time" class="form-input time-input hidden" data-day="1">
+                </div>
+                
+                <!-- 起點 -->
+                <div class="form-group">
+                  <label class="form-label">起點</label>
+                  <input type="text" class="form-input origin-input" placeholder="例：成田機場" data-day="1">
+                </div>
+                
+                <!-- 終點（單程專用） -->
+                <div class="form-group destination-group">
+                  <label class="form-label">終點</label>
+                  <input type="text" class="form-input destination-input" placeholder="例：東京市區" data-day="1">
+                </div>
+                
+                <!-- 景點（往返一日遊專用） -->
+                <div class="form-group spots-group hidden">
+                  <label class="form-label">景點串接</label>
+                  <div class="spots-container" data-day="1">
+                    <div class="spot-item">
+                      <input type="text" class="form-input spot-input" placeholder="景點名稱">
+                      <button type="button" class="btn-remove-spot">×</button>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-secondary btn-add-spot" data-day="1">+ 新增景點</button>
+                </div>
+                
+                <!-- 樂園選擇（接送來回專用） -->
+                <div class="form-group theme-park-group hidden">
+                  <label class="form-label">樂園</label>
+                  <select class="form-input theme-park-select" data-day="1">
+                    <option value="迪士尼">東京迪士尼</option>
+                    <option value="環球影城">大阪環球影城</option>
+                    <option value="其他">其他（自訂）</option>
+                  </select>
+                  <input type="text" class="form-input theme-park-custom hidden" placeholder="請輸入樂園名稱" data-day="1">
+                </div>
+                
+                <!-- 用車時數 -->
+                <div class="form-group">
+                  <label class="form-label">用車時數</label>
+                  <div class="time-suggestion" data-day="1">
+                    <p class="suggestion-label">💡 建議：不標註（單程）</p>
+                  </div>
+                  <select class="form-input hours-select" data-day="1">
+                    <option value="">不標註</option>
+                    <option value="6">6 小時</option>
+                    <option value="8">8 小時</option>
+                    <option value="10">10 小時</option>
+                    <option value="12">12 小時</option>
+                    <option value="custom">手動輸入</option>
+                  </select>
+                  <input type="number" class="form-input hours-custom hidden" placeholder="輸入時數" min="1" max="24" data-day="1">
+                </div>
+                
+                <!-- 過夜設定 -->
+                <div class="form-group">
+                  <label class="checkbox-label">
+                    <input type="checkbox" class="overnight-checkbox" data-day="1">
+                    <span>當晚司機留在當地（支付住宿費）</span>
+                  </label>
+                  <div class="overnight-details hidden" data-day="1">
+                    <input type="text" class="form-input overnight-location" placeholder="過夜地點（自動帶入終點）" readonly data-day="1">
+                    <p class="text-info">💡 標註 *宿，時數建議調整為 10 小時</p>
+                  </div>
+                </div>
+                
+                <!-- 車款選擇 -->
+                <div class="form-group">
+                  <label class="form-label">此天使用車款</label>
+                  <div class="day-vehicle-options" data-day="1">
+                    <!-- 動態生成 -->
+                    <p class="text-muted">請先在「車款選擇」區塊選擇車款</p>
+                  </div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <!-- 預覽 -->
+                <div class="day-preview">
+                  <label class="form-label">預覽</label>
+                  <div class="preview-text" data-day="1">
+                    <!-- 動態生成 -->
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            
+          </div>
+        </section>
+        
+      </aside>
+      
+      <!-- 右側預覽區 -->
+      <section class="preview-panel">
+        <div class="preview-header">
+          <h2 class="preview-title">📄 即時預覽</h2>
+          <button class="btn-toggle-preview" id="btnTogglePreview">
+            <span class="toggle-text">收合</span>
+          </button>
+        </div>
+        
+        <div class="preview-content" id="previewContent">
+          <div class="preview-output" id="previewOutput">
+            <p class="text-muted">請填寫左側資訊，預覽將即時更新</p>
+          </div>
+        </div>
+        
+        <div class="preview-actions">
+          <button class="btn btn-primary btn-copy" id="btnCopy">
+            📋 複製格式
+          </button>
+        </div>
+      </section>
+      
+    </main>
+    
+  </div>
+  
+  <!-- Toast 通知 -->
+  <div class="toast hidden" id="toast">
+    <span class="toast-message"></span>
+  </div>
+  
+  <script src="scripts/config.js"></script>
+  <script src="scripts/calculator.js"></script>
+  <script src="scripts/formatter.js"></script>
+  <script src="scripts/main.js"></script>
+  
+</body>
+</html>
